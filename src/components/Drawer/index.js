@@ -2,8 +2,9 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from '../../screens/Home';
 import Timetable from '../../screens/Timetable';
+import SchoolNews from '../../screens/SchoolNews';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHome, faCalendar } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faCalendar, faNewspaper } from '@fortawesome/free-solid-svg-icons'
 
 export default function Drawer() {
     const Drawer = createDrawerNavigator();
@@ -48,6 +49,18 @@ export default function Drawer() {
             drawerIcon: ({ focused }) => (
               <FontAwesomeIcon 
               icon={ faCalendar } 
+              size={focused ? 25 : 20}
+              color={focused ? '#0080ff' : '#999999'}/>
+            )
+          }}/>
+        <Drawer.Screen
+          name="Ogłoszenia szkolne"
+          component={SchoolNews}
+          options={{
+            title: 'Ogłoszenia',
+            drawerIcon: ({ focused }) => (
+              <FontAwesomeIcon 
+              icon={ faNewspaper } 
               size={focused ? 25 : 20}
               color={focused ? '#0080ff' : '#999999'}/>
             )
