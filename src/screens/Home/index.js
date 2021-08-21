@@ -2,20 +2,26 @@ import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
+  Button,
   ScrollView,
   RefreshControl,
   StyleSheet,
   SafeAreaView,
+  TouchableOpacity
 } from 'react-native';
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import * as Progress from 'react-native-progress';
 import LessonTile from '../../components/LessonTile';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faNewspaper, faUmbrellaBeach, faLaughBeam } from '@fortawesome/free-solid-svg-icons'
+import Modal from 'react-native-modal';
+import LessonHoursList from '../../components/LessonHoursList';
 
 export default function Home() {
   const [isLoading, setLoading] = useState(true);
   const [homeApi, setHomeApi] = useState();
+  const [lessonHours, setLessonHours] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     getHomeData();
@@ -24,6 +30,11 @@ export default function Home() {
   const onRefresh = React.useCallback(() => {
     getHomeData();
   }, []);
+
+  const toggleModal = () => {
+    getLessonHours();
+    setModalVisible(!isModalVisible);
+  };
 
   const getHomeData = async () => {
     let jsonResponse;
@@ -35,6 +46,18 @@ export default function Home() {
     } finally {
       setHomeApi(jsonResponse);
       setLoading(false);
+    }
+  };
+
+  const getLessonHours = async () => {
+    let jsonResponse;
+    try {
+      const response = await fetch('https://beta.elektronplus.pl/lessonHours');
+      jsonResponse = await response.json();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLessonHours(jsonResponse);
     }
   };
 
@@ -85,23 +108,39 @@ export default function Home() {
                 color={'#fff'}/>
             </View>
             <View style={styles.contentStyle}>
-              <Text style={styles.valueTextStyle}>
-                Do wakacji pozostało 545 dni
-              </Text>
+              {homeApi ? <Text style={styles.valueTextStyle}>Jeszcze tylko {homeApi.vacation.daysLeft} dni do wakacji</Text> : null}
             </View>
             <View style={styles.contentStyle}>
-            <Progress.Bar
-              style={{marginTop: 10}}
-              progress={0.8}
-              width={120}
-              height={10}
-              color="white" />
+              {homeApi ? (
+              <Progress.Bar
+                style={{marginTop: 10}}
+                progress={homeApi.vacation.procent}
+                width={120}
+                height={10}
+                color="white" />) : null}
             </View>
           </RNBounceable>
         </View>
-          {homeApi ? <LessonTile data={homeApi.lesson}/> : null }
+          {homeApi ? <LessonTile data={homeApi.lesson} onPress={toggleModal}/> : null }
         <View style={styles.bottomSpace}></View>
       </ScrollView>
+
+      <View>
+      <Modal isVisible={isModalVisible}
+        backdropOpacity={0}
+        onBackdropPress={toggleModal}
+        animationInTiming={600}
+        animationOutTiming={600}
+        backdropTransitionInTiming={600}
+        backdropTransitionOutTiming={600}>
+        <View style={styles.modalContent}>
+          <Text style={styles.modalContentTitle}>Dzwonki 🔔</Text>
+          {lessonHours ? <LessonHoursList data={lessonHours} /> : null}
+          <Button onPress={toggleModal} title="zamknij" />
+        </View>
+      </Modal>
+    </View>
+
     </SafeAreaView>
   );
 }
@@ -197,5 +236,17 @@ const styles = StyleSheet.create({
   },
   bottomSpace: {
     paddingVertical: 20
-  }
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  modalContentTitle: {
+    fontSize: 20,
+    marginBottom: 12,
+  },
 });

@@ -5,11 +5,12 @@ import Timetable from '../../screens/Timetable';
 import SchoolNews from '../../screens/SchoolNews';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHome, faCalendar, faNewspaper } from '@fortawesome/free-solid-svg-icons'
-
+import CustomDrawer from '../CustomDrawer';
 export default function Drawer() {
     const Drawer = createDrawerNavigator();
     return (
         <Drawer.Navigator
+          drawerContent={(props) => <CustomDrawer {...props} />}
           initialRouteName="Home"
           drawerPosition='left'
           drawerType="front"

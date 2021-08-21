@@ -129,8 +129,8 @@ android {
         applicationId "pl.krystian_wybranowski.elektronPlus"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 52
-        versionName "5.0-beta"
+        versionCode 53
+        versionName "5.1-beta"
     }
     splits {
         abi {

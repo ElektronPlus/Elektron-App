@@ -10,10 +10,15 @@ import {
   import { faChalkboard } from '@fortawesome/free-solid-svg-icons'
 
 export default function LessonTile(props) {
+
+    let isShortLessons = null;
+    if(props.data.isShortLessons){
+      isShortLessons = (<Text style={styles.shortLessonTextStyle}>Lekcje skrócone 🥳</Text>)
+    }
     switch (props.data.type) {
         case "Lekcja":
             return (
-            <RNBounceable style={styles.lessonStyle}>
+            <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
               <Text style={styles.titleTextStyle}>Lekcja {props.data.number}</Text>
               <View style={styles.iconContainerStyle}>
                 <FontAwesomeIcon 
@@ -30,11 +35,12 @@ export default function LessonTile(props) {
                 width={300}
                 height={10}
                 color="white"/>
+                {isShortLessons}
             </RNBounceable>
           )
         case "Przerwa":
             return (
-            <RNBounceable style={styles.lessonStyle}>
+            <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
               <Text style={styles.titleTextStyle}>Przerwa {props.data.number}</Text>
               <View style={styles.iconContainerStyle}>
                 <FontAwesomeIcon 
@@ -51,11 +57,12 @@ export default function LessonTile(props) {
                 width={300}
                 height={10}
                 color="white"/>
+              {isShortLessons}
             </RNBounceable>
           )
         case "afternoon":
             return (
-                <RNBounceable style={styles.lessonStyle}>
+                <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
                 <Text style={styles.titleTextStyle}>Koniec lekcji</Text>
                 <View style={styles.iconContainerStyle}>
                     <FontAwesomeIcon 
@@ -66,11 +73,12 @@ export default function LessonTile(props) {
                 <View style={styles.contentStyle}>
                   <Text style={styles.valueTextStyle}>Miłego popołudnia</Text>
                 </View>
+                {isShortLessons}
               </RNBounceable>
             )
         case "evening":
             return (
-                <RNBounceable style={styles.lessonStyle}>
+                <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
                 <Text style={styles.titleTextStyle}>Koniec lekcji</Text>
                 <View style={styles.iconContainerStyle}>
                     <FontAwesomeIcon 
@@ -81,11 +89,12 @@ export default function LessonTile(props) {
                 <View style={styles.contentStyle}>
                   <Text style={styles.valueTextStyle}>Dobranoc 😴</Text>
                 </View>
+                {isShortLessons}
               </RNBounceable>
             )
         case "morning":
             return (
-                <RNBounceable style={styles.lessonStyle}>
+                <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
                 <View style={styles.iconContainerStyle}>
                     <FontAwesomeIcon 
                         icon={ faChalkboard } 
@@ -95,6 +104,7 @@ export default function LessonTile(props) {
                 <View style={styles.contentStyle}>
                   <Text style={styles.valueTextStyle}>Smacznej kawusi ☕</Text>
                 </View>
+                {isShortLessons}
               </RNBounceable>
             )
         default:
@@ -113,6 +123,11 @@ const styles = StyleSheet.create({
     titleTextStyle: {
       fontSize: 15,
       fontWeight: '500',
+      color: '#fff',
+    },
+    shortLessonTextStyle: {
+      textAlign: 'right',
+      fontSize: 12,
       color: '#fff',
     },
     iconContainerStyle: {
