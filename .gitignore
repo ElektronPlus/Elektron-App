@@ -58,3 +58,5 @@ elektron.jks
 
 # CocoaPods
 /ios/Pods/
+
+google-services.json

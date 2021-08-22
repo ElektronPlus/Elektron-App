@@ -6,6 +6,8 @@ import SchoolNews from '../../screens/SchoolNews';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHome, faCalendar, faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import CustomDrawer from '../CustomDrawer';
+import MZK from '../../screens/MZK';
+
 export default function Drawer() {
     const Drawer = createDrawerNavigator();
     return (
@@ -59,6 +61,18 @@ export default function Drawer() {
           component={SchoolNews}
           options={{
             title: 'Ogłoszenia',
+            drawerIcon: ({ focused }) => (
+              <FontAwesomeIcon 
+              icon={ faNewspaper } 
+              size={focused ? 25 : 20}
+              color={focused ? '#0080ff' : '#999999'}/>
+            )
+          }}/>
+        <Drawer.Screen
+          name="MZK"
+          component={MZK}
+          options={{
+            title: 'Odjazdy MZK',
             drawerIcon: ({ focused }) => (
               <FontAwesomeIcon 
               icon={ faNewspaper } 
