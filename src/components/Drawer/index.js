@@ -6,6 +6,12 @@ import SchoolNews from '../../screens/SchoolNews';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHome, faCalendar, faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import CustomDrawer from '../CustomDrawer';
+import styled from "styled-components"
+
+const StyledText = styled.Text`
+  color: ${props => props.theme.text}
+`
+
 export default function Drawer() {
     const Drawer = createDrawerNavigator();
     return (
@@ -34,7 +40,10 @@ export default function Drawer() {
           name="Home"
           component={Home}
           options={{
-            title: 'Home',
+            drawerLabel: function(){
+              return <StyledText>Strona główna</StyledText>
+            },
+            title: 'Strona główna',
             drawerIcon: ({ focused }) => (
                 <FontAwesomeIcon 
                 icon={ faHome } 
@@ -46,6 +55,9 @@ export default function Drawer() {
           name="Plan lekcji"
           component={Timetable}
           options={{
+            drawerLabel: function(){
+              return <StyledText>Plan lekcji</StyledText>
+            },
             title: 'Plan lekcji',
             drawerIcon: ({ focused }) => (
               <FontAwesomeIcon 
@@ -58,6 +70,9 @@ export default function Drawer() {
           name="Ogłoszenia szkolne"
           component={SchoolNews}
           options={{
+            drawerLabel: function(){
+              return <StyledText>Ogłoszenia</StyledText>
+            },
             title: 'Ogłoszenia',
             drawerIcon: ({ focused }) => (
               <FontAwesomeIcon 

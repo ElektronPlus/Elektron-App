@@ -7,8 +7,10 @@ import {
   RefreshControl,
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
+  Switch
 } from 'react-native';
+import styled from "styled-components/native"
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import * as Progress from 'react-native-progress';
 import LessonTile from '../../components/LessonTile';
@@ -17,7 +19,15 @@ import { faNewspaper, faUmbrellaBeach, faLaughBeam } from '@fortawesome/free-sol
 import Modal from 'react-native-modal';
 import LessonHoursList from '../../components/LessonHoursList';
 
+
 export default function Home() {
+  const ModalView = styled.View`
+  backgroundColor: ${props => props.theme.backgroundAlt}
+  `
+  const ModalTitle = styled.Text`
+  background: ${props => props.theme.backgroundAlt},
+  color: ${props => props.theme.text}
+  `
   const [isLoading, setLoading] = useState(true);
   const [homeApi, setHomeApi] = useState();
   const [lessonHours, setLessonHours] = useState();
@@ -61,14 +71,18 @@ export default function Home() {
     }
   };
 
+  const Container = styled.SafeAreaView`
+  flex:1;
+  background:${props => props.theme.background};
+`
+
   return (
-    <SafeAreaView style={styles.container}>
+    <Container>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
         }>
-        
         <RNBounceable style={styles.announcements}>
           <Text style={styles.titleTextStyle}>Ogłoszenie</Text>
           <View style={styles.iconContainerStyle}>
@@ -133,15 +147,14 @@ export default function Home() {
         animationOutTiming={600}
         backdropTransitionInTiming={600}
         backdropTransitionOutTiming={600}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalContentTitle}>Dzwonki 🔔</Text>
+        <ModalView style={styles.modalContent}>
+          <ModalTitle style={styles.modalContentTitle}>Dzwonki 🔔</ModalTitle>
           {lessonHours ? <LessonHoursList data={lessonHours} /> : null}
           <Button onPress={toggleModal} title="zamknij" />
-        </View>
+        </ModalView>
       </Modal>
     </View>
-
-    </SafeAreaView>
+    </Container>
   );
 }
 
@@ -238,7 +251,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20
   },
   modalContent: {
-    backgroundColor: 'white',
     padding: 22,
     justifyContent: 'center',
     alignItems: 'center',
