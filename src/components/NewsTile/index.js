@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     contentStyle: {
-        marginTop: 20,
+        marginTop: 10,
         flexDirection: 'row',
         alignItems: 'center',
       },

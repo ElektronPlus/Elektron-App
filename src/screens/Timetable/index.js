@@ -6,13 +6,12 @@ import TimetableComponent from '../../components/TimetableComponent';
 export default function Timetable() {
   const [isLoading, setLoading] = useState(true);
   const [timetableData, setTimetableData] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [classrooms, setClassrooms] = useState();
-  const [teachers, setTeachers] = useState();
+
   const [grades, setGrades] = useState([]);
-  const [selectedGrade, setSelectedGrade] = useState(null);
-  let plan;
+  const [gradesOpen, setGradesOpen] = useState(false);
+  const [gradesValue, setGradesValue] = useState();
+
+  const [selectedTimetable, setSelectedTimetable] = useState(null);
 
   useEffect(() => {
     getTimetableData();
@@ -39,34 +38,22 @@ export default function Timetable() {
     }
   }
 
-  const getTimetable = (type, id) => {
-    switch (type) {
-      case "grade":
-        setSelectedGrade(id)
-        break;
-      case "teacher":
-        
-        break;
-      case "classroom":
-        
-        break;
-    }
+  const getTimetable = (id) => {
+    setSelectedTimetable(timetableData.plany["o"+id])
   }
 
     return (
         <SafeAreaView style={styles.container}>
-        
-      <DropDownPicker
-      theme="DARK"
-      open={open}
-      value={value}
-      items={grades}
-      setOpen={setOpen}
-      setValue={setValue}
-      onChangeValue={(value) => {
-        getTimetable("grade", value);
-      }}/>
-      
+          <DropDownPicker
+            theme="DARK"
+            open={gradesOpen}
+            value={gradesValue}
+            items={grades}
+            setOpen={setGradesOpen}
+            setValue={setGradesValue}
+            onChangeValue={(value) => {
+              getTimetable(value);
+            }}/>
 
         <ScrollView
           contentContainerStyle={styles.scrollView}
@@ -76,7 +63,7 @@ export default function Timetable() {
               onRefresh={onRefresh}
             />}>
               
-            {selectedGrade ? <TimetableComponent data={timetableData.plany["o"+value]} /> : null}
+            {selectedTimetable ? <TimetableComponent data={selectedTimetable} /> : null}
         </ScrollView>
       </SafeAreaView>
     )

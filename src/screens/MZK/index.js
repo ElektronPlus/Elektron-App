@@ -13,12 +13,13 @@ import BusDepartures from '../../components/BusDepartures';
 import styled from "styled-components"
 
 export default function MZK() {
-    const MainView = styled.SafeAreaView`
-    background: ${props => props.theme.background}
-    `
-    const StyledText = styled.Text`
-    color: ${props => props.theme.text}
-    `
+  const MainView = styled.SafeAreaView`
+  background: ${props => props.theme.background}
+  `
+  const StyledText = styled.Text`
+  color: ${props => props.theme.text}
+  `
+
     const [loading, setLoading] = useState(false)
     const [suggestionsList, setSuggestionsList] = useState(null)
     const [departures, setDepartures] = useState(null)
@@ -57,12 +58,11 @@ export default function MZK() {
           } 
     };
 
-    
-
   return (
-    <MainView style={styles.container}>
-    <StyledText>Wpisz nazwę lub numer przystanku</StyledText>
-    {/* TODO: Nie umiem zmienić koloru tekstu wyświetlanego w tym syfie podpowiadającym, jak to zrobić? - Matt */}
+    <SafeAreaView style={{backgroundColor: "#383b42"}}>
+    <MainView>
+      <StyledText>Wpisz nazwę lub numer przystanku</StyledText>
+    </MainView>
     <AutocompleteDropdown
           ref={searchRef}
           controller={(controller) => {
@@ -86,9 +86,6 @@ export default function MZK() {
             setDepartures(null)
           }}
           suggestionsListMaxHeight={500}
-          suggestionsListContainerStyle={{
-            background: `${props => props.theme.backgroundAlt}`,
-          }}
           debounce={600}
           loading={loading}
           useFilter={false}
@@ -97,16 +94,30 @@ export default function MZK() {
             autoCorrect: false,
             autoCapitalize: "none",
             style: {
-              color: "black",
+              backgroundColor: "#383b42",
+              color: "#fff",
               paddingLeft: 18
             }
+          }}
+          rightButtonsContainerStyle={{
+            right: 8,
+            height: 30,
+            top: 10,
+            alignSelfs: "center",
+            backgroundColor: "#383b42"
+          }}
+          inputContainerStyle={{
+            backgroundColor: "transparent"
           }}
           inputHeight={50}
           showChevron={false}
         />
+    
+    <MainView style={{height: "100%"}}>
         {fetchingAPI ? <ActivityIndicator size="small" color="#0000ff" /> : null}
         {departures ? <BusDepartures data={departures}/> : null}
     </MainView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
