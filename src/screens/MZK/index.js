@@ -10,8 +10,15 @@ import {
 } from 'react-native';
 import {AutocompleteDropdown} from 'react-native-autocomplete-dropdown';
 import BusDepartures from '../../components/BusDepartures';
+import styled from "styled-components"
 
 export default function MZK() {
+    const MainView = styled.SafeAreaView`
+    background: ${props => props.theme.background}
+    `
+    const StyledText = styled.Text`
+    color: ${props => props.theme.text}
+    `
     const [loading, setLoading] = useState(false)
     const [suggestionsList, setSuggestionsList] = useState(null)
     const [departures, setDepartures] = useState(null)
@@ -50,9 +57,12 @@ export default function MZK() {
           } 
     };
 
+    
+
   return (
-    <SafeAreaView style={styles.container}>
-    <Text>Wpisz nazwę lub numer przystanku</Text>
+    <MainView style={styles.container}>
+    <StyledText>Wpisz nazwę lub numer przystanku</StyledText>
+    {/* TODO: Nie umiem zmienić koloru tekstu wyświetlanego w tym syfie podpowiadającym, jak to zrobić? - Matt */}
     <AutocompleteDropdown
           ref={searchRef}
           controller={(controller) => {
@@ -76,6 +86,9 @@ export default function MZK() {
             setDepartures(null)
           }}
           suggestionsListMaxHeight={500}
+          suggestionsListContainerStyle={{
+            background: `${props => props.theme.backgroundAlt}`,
+          }}
           debounce={600}
           loading={loading}
           useFilter={false}
@@ -93,7 +106,7 @@ export default function MZK() {
         />
         {fetchingAPI ? <ActivityIndicator size="small" color="#0000ff" /> : null}
         {departures ? <BusDepartures data={departures}/> : null}
-    </SafeAreaView>
+    </MainView>
   );
 }
 const styles = StyleSheet.create({
