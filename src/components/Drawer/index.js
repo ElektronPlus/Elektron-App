@@ -4,7 +4,7 @@ import Home from '../../screens/Home';
 import Timetable from '../../screens/Timetable';
 import SchoolNews from '../../screens/SchoolNews';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHome, faCalendar, faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faCalendar, faNewspaper, faBus } from '@fortawesome/free-solid-svg-icons'
 import CustomDrawer from '../CustomDrawer';
 import MZK from '../../screens/MZK';
 import styled from "styled-components"
@@ -86,10 +86,13 @@ export default function Drawer() {
           name="MZK"
           component={MZK}
           options={{
-            title: 'Odjazdy MZK',
+            drawerLabel: function(){
+              return <StyledText>Przystanek MZK</StyledText>
+            },
+            title: 'Przystanek',
             drawerIcon: ({ focused }) => (
               <FontAwesomeIcon 
-              icon={ faNewspaper } 
+              icon={ faBus } 
               size={focused ? 25 : 20}
               color={focused ? '#0080ff' : '#999999'}/>
             )

@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  ActivityIndicator,
   Text,
   View,
 } from 'react-native';
@@ -13,8 +14,9 @@ import BusDepartures from '../../components/BusDepartures';
 export default function MZK() {
     const [loading, setLoading] = useState(false)
     const [suggestionsList, setSuggestionsList] = useState(null)
-    const [selectedItem, setSelectedItem] = useState(null)
     const [departures, setDepartures] = useState(null)
+    const [fetchingAPI, setFetchingAPI] = useState(false)
+    const [runTask, setRunTask] = useState()
     const dropdownController = useRef(null)
     const searchRef = useRef(null)
 
@@ -24,31 +26,29 @@ export default function MZK() {
             return
         }
         setLoading(true)
-        const response = await fetch("http://192.168.0.2:3000/busStops")
+        const response = await fetch("https://beta.elektronplus.pl/busStops")
         const items = await response.json()
         let suggestions = []
         for (var busStop of items){
             if(busStop.name.toLowerCase().includes(q.toLowerCase())){
-                suggestions.push({id: busStop.name, title: busStop.name})
+                suggestions.push({id: busStop.name.split('(').pop().split(')')[0], title: busStop.name})
             }
         }
         setSuggestionsList(suggestions)
         setLoading(false)
     }, [])
 
-    const getBusDepartures = async () => {
+    const getBusDepartures = async (id) => {
         try {
-            const response = await fetch('https://beta.elektronplus.pl/mzk/400');
+            const response = await fetch('https://beta.elektronplus.pl/mzk/'+id);
             const json = await response.json();
             setDepartures(json)
+            setFetchingAPI(false)
+            console.log("fetch " + id)
           } catch (error) {
             console.error(error);
-          }
+          } 
     };
-
-    if(selectedItem){
-        getBusDepartures()
-    }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,7 +61,19 @@ export default function MZK() {
           dataSet={suggestionsList}
           onChangeText={getSuggestions}
           onSelectItem={(item) => {
-            item && setSelectedItem(item.id)
+            let id = item && item.id
+            if(!id) return
+            clearInterval(runTask)
+            setFetchingAPI(true)
+            getBusDepartures(id)
+            let run = setInterval(() => {
+              getBusDepartures(id)
+            }, 10000)
+            setRunTask(run)
+          }}
+          onClear={() => {
+            clearInterval(runTask)
+            setDepartures(null)
           }}
           suggestionsListMaxHeight={500}
           debounce={600}
@@ -79,6 +91,7 @@ export default function MZK() {
           inputHeight={50}
           showChevron={false}
         />
+        {fetchingAPI ? <ActivityIndicator size="small" color="#0000ff" /> : null}
         {departures ? <BusDepartures data={departures}/> : null}
     </SafeAreaView>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 
 export default function BusDepartures(props) {
 const departures = Object.keys(props.data).map((departure) => {
@@ -17,7 +17,7 @@ const departures = Object.keys(props.data).map((departure) => {
       </View>
     );
 })
-    return (<View>{departures}</View>)
+    return (<ScrollView>{departures}</ScrollView>)
 }
 
 const styles = StyleSheet.create({
@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
       },
       kierunek: {
-        flex: 1,
+        flex: 4,
         padding: 10,
       },
       number: {
         flex: 0,
-        marginLeft: 6,
+        marginLeft: 5,
         padding: 10,
       },
 })
