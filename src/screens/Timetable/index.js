@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import TimetableComponent from '../../components/TimetableComponent';
 
@@ -7,9 +7,9 @@ export default function Timetable() {
   const [isLoading, setLoading] = useState(true);
   const [timetableData, setTimetableData] = useState([]);
 
-  const [grades, setGrades] = useState([]);
-  const [gradesOpen, setGradesOpen] = useState(false);
-  const [gradesValue, setGradesValue] = useState();
+  const [timetable, setTimetable] = useState([]);
+  const [timetableOpen, setTimetableOpen] = useState(false);
+  const [timetableValue, setTimetableValue] = useState();
 
   const [selectedTimetable, setSelectedTimetable] = useState(null);
 
@@ -26,11 +26,23 @@ export default function Timetable() {
       const response = await fetch('https://beta.elektronplus.pl/timetable');
       const json = await response.json();
       setTimetableData(json);
-      let klasy = []
-      Object.keys(json.legend.oddział.options).map((index) => {
-        klasy.push({label: json.legend.oddział.options[index].name, value: json.legend.oddział.options[index].value})
+      let grades = json.legend.oddział.options
+      let teachers = json.legend.nauczyciel.options
+      let classrooms = json.legend.sala.options
+      let gradesArray = [{label: '-------- Klasy --------', value: 'klasy', disabled: 'disabled'}]
+      let teachersArray = [{label: '-------- Nauczyciele --------', value: 'nauczyciele', disabled: 'disabled'}]
+      let classroomsArray = [{label: '-------- Sale --------', value: 'sale', disabled: 'disabled'}]
+      Object.keys(grades).map((index) => {
+        gradesArray.push({label: grades[index].name, value: "o"+grades[index].value})
       })
-      setGrades(klasy)
+      Object.keys(teachers).map((index) => {
+        teachersArray.push({label: teachers[index].name, value: "n"+teachers[index].value})
+      })
+      Object.keys(classrooms).map((index) => {
+        classroomsArray.push({label: classrooms[index].name, value: "s"+classrooms[index].value})
+      })
+      setTimetable(gradesArray.concat(teachersArray, classroomsArray))
+
     } catch (error) {
       console.error(error);
     } finally {
@@ -39,18 +51,24 @@ export default function Timetable() {
   }
 
   const getTimetable = (id) => {
-    setSelectedTimetable(timetableData.plany["o"+id])
+    setSelectedTimetable(timetableData.plany[id])
   }
 
     return (
         <SafeAreaView style={styles.container}>
           <DropDownPicker
             theme="DARK"
-            open={gradesOpen}
-            value={gradesValue}
-            items={grades}
-            setOpen={setGradesOpen}
-            setValue={setGradesValue}
+            style={{height: 60}}
+            placeholder="Wybierz klasę/ nauczyciela/ sale"
+            translation={{
+              SEARCH_PLACEHOLDER: "Wyszukaj..."
+            }}
+            searchable={true}
+            open={timetableOpen}
+            value={timetableValue}
+            items={timetable}
+            setOpen={setTimetableOpen}
+            setValue={setTimetableValue}
             onChangeValue={(value) => {
               getTimetable(value);
             }}/>

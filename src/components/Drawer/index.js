@@ -4,10 +4,11 @@ import Home from '../../screens/Home';
 import Timetable from '../../screens/Timetable';
 import SchoolNews from '../../screens/SchoolNews';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHome, faCalendar, faNewspaper, faBus } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faCalendar, faNewspaper, faBus, faClipboardList } from '@fortawesome/free-solid-svg-icons'
 import CustomDrawer from '../CustomDrawer';
 import MZK from '../../screens/MZK';
 import styled from "styled-components"
+import SubLessons from '../../screens/SubLessons';
 
 const StyledText = styled.Text`
   color: ${props => props.theme.text}
@@ -53,6 +54,21 @@ export default function Drawer() {
             )
           }}/>
         <Drawer.Screen
+          name="Zastępstwa"
+          component={SubLessons}
+          options={{
+            drawerLabel: function(){
+              return <StyledText>Zastępstwa</StyledText>
+            },
+            title: 'Zastępstwa',
+            drawerIcon: ({ focused }) => (
+                <FontAwesomeIcon 
+                icon={ faCalendar } 
+                size={focused ? 25 : 20}
+                color={focused ? '#0080ff' : '#999999'}/>
+            )
+          }}/>
+        <Drawer.Screen
           name="Plan lekcji"
           component={Timetable}
           options={{
@@ -62,7 +78,7 @@ export default function Drawer() {
             title: 'Plan lekcji',
             drawerIcon: ({ focused }) => (
               <FontAwesomeIcon 
-              icon={ faCalendar } 
+              icon={ faClipboardList } 
               size={focused ? 25 : 20}
               color={focused ? '#0080ff' : '#999999'}/>
             )
