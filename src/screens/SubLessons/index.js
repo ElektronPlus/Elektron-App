@@ -29,6 +29,10 @@ export default function SubLessons() {
     }
   };
 
+  const StyledText = styled.Text`
+    color: ${props => props.theme.text}
+    `
+
     return (
         <SafeAreaView style={styles.container}>
         <NewsScrollView
@@ -38,7 +42,7 @@ export default function SubLessons() {
               refreshing={isLoading}
               onRefresh={onRefresh}
             />}>
-            <Text>JDD</Text>
+            <StyledText>JDD</StyledText>
             <View style={styles.bottomSpace}></View>
         </NewsScrollView>
       </SafeAreaView>

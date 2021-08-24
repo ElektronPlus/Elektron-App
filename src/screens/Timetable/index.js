@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import TimetableComponent from '../../components/TimetableComponent';
+import styled from "styled-components"
 
 export default function Timetable() {
   const [isLoading, setLoading] = useState(true);
@@ -50,6 +51,10 @@ export default function Timetable() {
     }
   }
 
+  const StyledView = styled.ScrollView`
+  backgroundColor: ${props => props.theme.background}
+  `
+
   const getTimetable = (id) => {
     setSelectedTimetable(timetableData.plany[id])
   }
@@ -67,13 +72,13 @@ export default function Timetable() {
             open={timetableOpen}
             value={timetableValue}
             items={timetable}
+            maxHeight={350}
             setOpen={setTimetableOpen}
             setValue={setTimetableValue}
             onChangeValue={(value) => {
               getTimetable(value);
             }}/>
-
-        <ScrollView
+        <StyledView
           contentContainerStyle={styles.scrollView}
           refreshControl={
             <RefreshControl
@@ -82,7 +87,7 @@ export default function Timetable() {
             />}>
               
             {selectedTimetable ? <TimetableComponent data={selectedTimetable} /> : null}
-        </ScrollView>
+        </StyledView>
       </SafeAreaView>
     )
 }
@@ -91,7 +96,6 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     scrollView: {
-      alignItems: 'center',
-      backgroundColor: '#F6F7F9'
+      alignItems: 'center'
     },
   });

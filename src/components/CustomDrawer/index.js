@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginVertical: 8,
-    marginTop: 50,
+    marginTop: 20,
     borderBottomColor: "#737373",
     borderBottomWidth: StyleSheet.hairlineWidth
   }

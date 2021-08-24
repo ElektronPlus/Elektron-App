@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import styled from "styled-components"
 
 export default function TimetableComponent(props) {
     let hours = props.data.godziny
@@ -9,83 +10,91 @@ export default function TimetableComponent(props) {
     let thursday = props.data.tydzien[3].lekcje
     let friday = props.data.tydzien[4].lekcje
 
+    const LessonItem = styled.View`
+    borderBottomColor: ${props => props.theme.text}
+    `
+
+    const StyledText = styled.Text`
+    color: ${props => props.theme.text}
+    `
+
     const mondayLessons = monday.map((lesson, i) => {
       return (
-        <View style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={styles.lessonItem} key={lesson.index}>
           <View style={styles.number}>
-            <Text>{lesson.index}.</Text>
+            <StyledText>{lesson.index}.</StyledText>
           </View>
           <View style={styles.time}>
-            <Text>{hours[i]}</Text>
+            <StyledText>{hours[i]}</StyledText>
           </View>
           <View style={styles.lesson}>
-            <Text>{lesson.data}</Text>
+            <StyledText>{lesson.data}</StyledText>
           </View>
-        </View>
+        </LessonItem>
       );
     })
 
     const tuesdayLessons = tuesday.map((lesson, i) => {
       return (
-        <View style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={styles.lessonItem} key={lesson.index}>
           <View style={styles.number}>
-            <Text>{lesson.index}.</Text>
+            <StyledText>{lesson.index}.</StyledText>
           </View>
           <View style={styles.time}>
-            <Text>{hours[i]}</Text>
+            <StyledText>{hours[i]}</StyledText>
           </View>
           <View style={styles.lesson}>
-            <Text>{lesson.data}</Text>
+            <StyledText>{lesson.data}</StyledText>
           </View>
-        </View>
+        </LessonItem>
       );
     })
 
     const wednesdayLessons = wednesday.map((lesson, i) => {
       return (
-        <View style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={styles.lessonItem} key={lesson.index}>
           <View style={styles.number}>
-            <Text>{lesson.index}.</Text>
+            <StyledText>{lesson.index}.</StyledText>
           </View>
           <View style={styles.time}>
-            <Text>{hours[i]}</Text>
+            <StyledText>{hours[i]}</StyledText>
           </View>
           <View style={styles.lesson}>
-            <Text>{lesson.data}</Text>
+            <StyledText>{lesson.data}</StyledText>
           </View>
-        </View>
+        </LessonItem>
       );
     })
 
     const thursdayLessons = thursday.map((lesson, i) => {
       return (
-        <View style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={styles.lessonItem} key={lesson.index}>
           <View style={styles.number}>
-            <Text>{lesson.index}.</Text>
+            <StyledText>{lesson.index}.</StyledText>
           </View>
           <View style={styles.time}>
-            <Text>{hours[i]}</Text>
+            <StyledText>{hours[i]}</StyledText>
           </View>
           <View style={styles.lesson}>
-            <Text>{lesson.data}</Text>
+            <StyledText>{lesson.data}</StyledText>
           </View>
-        </View>
+        </LessonItem>
       );
     })
 
     const fridayLessons = friday.map((lesson, i) => {
       return (
-        <View style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={styles.lessonItem} key={lesson.index}>
           <View style={styles.number}>
-            <Text>{lesson.index}.</Text>
+            <StyledText>{lesson.index}.</StyledText>
           </View>
           <View style={styles.time}>
-            <Text>{hours[i]}</Text>
+            <StyledText>{hours[i]}</StyledText>
           </View>
           <View style={styles.lesson}>
-            <Text>{lesson.data}</Text>
+            <StyledText>{lesson.data}</StyledText>
           </View>
-        </View>
+        </LessonItem>
       );
     })
 
@@ -123,14 +132,13 @@ const styles = StyleSheet.create({
   dayLabel: {
     padding: 8,
     width: '100%',
-    backgroundColor: '#007AFF',
+    backgroundColor: '#3960CF',
   },
   lessonItem: {
     padding: 4,
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    borderBottomColor: 'black',
     borderBottomWidth: 1
   },
   lesson: {
@@ -148,7 +156,7 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     padding: 10,
     justifyContent: 'center',
-    borderLeftColor: '#65D085',
+    borderLeftColor: '#3960CF',
     borderLeftWidth: 2
   },
   text: {
