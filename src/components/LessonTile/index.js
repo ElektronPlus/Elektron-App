@@ -3,8 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
+    TouchableOpacity
   } from 'react-native';
-  import RNBounceable from '@freakycoder/react-native-bounceable';
   import * as Progress from 'react-native-progress';
   import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
   import { faChalkboard } from '@fortawesome/free-solid-svg-icons'
@@ -18,7 +18,7 @@ export default function LessonTile(props) {
     switch (props.data.type) {
         case "Lekcja":
             return (
-            <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
+            <TouchableOpacity style={styles.lessonStyle} onPress={props.onPress}>
               <Text style={styles.titleTextStyle}>Lekcja {props.data.number}</Text>
               <View style={styles.iconContainerStyle}>
                 <FontAwesomeIcon 
@@ -36,11 +36,11 @@ export default function LessonTile(props) {
                 height={10}
                 color="white"/>
                 {isShortLessons}
-            </RNBounceable>
+            </TouchableOpacity>
           )
         case "Przerwa":
             return (
-            <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
+            <TouchableOpacity style={styles.lessonStyle} onPress={props.onPress}>
               <Text style={styles.titleTextStyle}>Przerwa {props.data.number}</Text>
               <View style={styles.iconContainerStyle}>
                 <FontAwesomeIcon 
@@ -58,11 +58,11 @@ export default function LessonTile(props) {
                 height={10}
                 color="white"/>
               {isShortLessons}
-            </RNBounceable>
+            </TouchableOpacity>
           )
         case "afternoon":
             return (
-                <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
+                <TouchableOpacity style={styles.lessonStyle} onPress={props.onPress}>
                 <Text style={styles.titleTextStyle}>Koniec lekcji</Text>
                 <View style={styles.iconContainerStyle}>
                     <FontAwesomeIcon 
@@ -74,11 +74,11 @@ export default function LessonTile(props) {
                   <Text style={styles.valueTextStyle}>Miłego popołudnia</Text>
                 </View>
                 {isShortLessons}
-              </RNBounceable>
+              </TouchableOpacity>
             )
         case "evening":
             return (
-                <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
+                <TouchableOpacity style={styles.lessonStyle} onPress={props.onPress}>
                 <Text style={styles.titleTextStyle}>Koniec lekcji</Text>
                 <View style={styles.iconContainerStyle}>
                     <FontAwesomeIcon 
@@ -90,11 +90,11 @@ export default function LessonTile(props) {
                   <Text style={styles.valueTextStyle}>Dobranoc 😴</Text>
                 </View>
                 {isShortLessons}
-              </RNBounceable>
+              </TouchableOpacity>
             )
         case "morning":
             return (
-                <RNBounceable style={styles.lessonStyle} onPress={props.onPress}>
+                <TouchableOpacity style={styles.lessonStyle} onPress={props.onPress}>
                 <View style={styles.iconContainerStyle}>
                     <FontAwesomeIcon 
                         icon={ faChalkboard } 
@@ -105,7 +105,7 @@ export default function LessonTile(props) {
                   <Text style={styles.valueTextStyle}>Smacznej kawusi ☕</Text>
                 </View>
                 {isShortLessons}
-              </RNBounceable>
+              </TouchableOpacity>
             )
         default:
             return (<View></View>)
@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
     },
     iconContainerStyle: {
       position: 'absolute',
-      top: 0,
-      right: 0,
+      top: 1,
+      right: 1,
       width: 60,
       height: 60,
       borderTopLeftRadius: 40,

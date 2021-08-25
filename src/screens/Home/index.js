@@ -5,20 +5,16 @@ import {
   Button,
   ScrollView,
   RefreshControl,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  Switch
+  StyleSheet
 } from 'react-native';
 import styled from "styled-components/native"
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import * as Progress from 'react-native-progress';
 import LessonTile from '../../components/LessonTile';
+import LessonHoursList from '../../components/LessonHoursList';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faNewspaper, faUmbrellaBeach, faLaughBeam } from '@fortawesome/free-solid-svg-icons'
 import Modal from 'react-native-modal';
-import LessonHoursList from '../../components/LessonHoursList';
-
 
 export default function Home() {
   const ModalView = styled.View`
@@ -202,8 +198,8 @@ const styles = StyleSheet.create({
   },
   iconContainerStyle: {
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: 1,
+    right: 1,
     width: 60,
     height: 60,
     borderTopLeftRadius: 40,

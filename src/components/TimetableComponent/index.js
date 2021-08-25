@@ -15,12 +15,13 @@ export default function TimetableComponent(props) {
     `
 
     const StyledText = styled.Text`
-    color: ${props => props.theme.text}
+    color: ${props => props.theme.text};
+    font-size: 15
     `
 
     const mondayLessons = monday.map((lesson, i) => {
       return (
-        <LessonItem style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={(i !== monday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
           <View style={styles.number}>
             <StyledText>{lesson.index}.</StyledText>
           </View>
@@ -36,7 +37,7 @@ export default function TimetableComponent(props) {
 
     const tuesdayLessons = tuesday.map((lesson, i) => {
       return (
-        <LessonItem style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={(i !== tuesday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
           <View style={styles.number}>
             <StyledText>{lesson.index}.</StyledText>
           </View>
@@ -52,7 +53,7 @@ export default function TimetableComponent(props) {
 
     const wednesdayLessons = wednesday.map((lesson, i) => {
       return (
-        <LessonItem style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={(i !== wednesday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
           <View style={styles.number}>
             <StyledText>{lesson.index}.</StyledText>
           </View>
@@ -68,7 +69,7 @@ export default function TimetableComponent(props) {
 
     const thursdayLessons = thursday.map((lesson, i) => {
       return (
-        <LessonItem style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={(i !== thursday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
           <View style={styles.number}>
             <StyledText>{lesson.index}.</StyledText>
           </View>
@@ -84,7 +85,7 @@ export default function TimetableComponent(props) {
 
     const fridayLessons = friday.map((lesson, i) => {
       return (
-        <LessonItem style={styles.lessonItem} key={lesson.index}>
+        <LessonItem style={(i !== friday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
           <View style={styles.number}>
             <StyledText>{lesson.index}.</StyledText>
           </View>
@@ -140,6 +141,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     borderBottomWidth: 1
+  },
+  lessonItemLast:{
+    padding: 4,
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row'
   },
   lesson: {
     flex: 6,

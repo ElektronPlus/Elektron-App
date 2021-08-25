@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import { RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import styled from "styled-components";
+import SubLessonTile from '../../components/SubLessonTile';
 
 export default function SubLessons() {
   const NewsScrollView = styled.ScrollView`
   background: ${props => props.theme.background}
 `
   const [isLoading, setLoading] = useState(true);
-  const [subLessonsData, setSubLessonsData] = useState([]);
+  const [subLessons, setSubLessons] = useState(null);
+  const [nextDaySubLessons, setNextDaySubLessons] = useState(null);
 
   useEffect(() => {
     getData();
@@ -21,7 +23,10 @@ export default function SubLessons() {
     try {
       const response = await fetch('https://beta.elektronplus.pl/subLessons');
       const json = await response.json();
-      setSubLessonsData(json);
+      setSubLessons(json);
+      if(json.nextDaySubLessonsDay != ""){
+        setNextDaySubLessons(json)
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -42,7 +47,8 @@ export default function SubLessons() {
               refreshing={isLoading}
               onRefresh={onRefresh}
             />}>
-            <StyledText>JDD</StyledText>
+            {subLessons ? <SubLessonTile day={subLessons.todaySubLessonsDay} content={subLessons.todaySubLessons}/> : null}
+            {nextDaySubLessons ? <SubLessonTile day={subLessons.nextDaySubLessonsDay} content={subLessons.nextDaySubLessons}/> : null}
             <View style={styles.bottomSpace}></View>
         </NewsScrollView>
       </SafeAreaView>

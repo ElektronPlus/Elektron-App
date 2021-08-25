@@ -60,3 +60,4 @@ elektron.jks
 /ios/Pods/
 
 google-services.json
+*.hprof

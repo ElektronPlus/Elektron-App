@@ -1,12 +1,10 @@
 import React, {useRef, useState, useCallback} from 'react';
 import {
-  RefreshControl,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   ActivityIndicator,
-  Text,
   View,
+  Button,
 } from 'react-native';
 import {AutocompleteDropdown} from 'react-native-autocomplete-dropdown';
 import BusDepartures from '../../components/BusDepartures';
@@ -58,11 +56,18 @@ export default function MZK() {
           } 
     };
 
+    const onSelectItem = (id) => {
+      clearInterval(runTask)
+      setFetchingAPI(true)
+      getBusDepartures(id)
+      const run = setInterval(() => {
+        getBusDepartures(id)
+      }, 10000)
+      setRunTask(run)
+    }
+
   return (
     <SafeAreaView style={{backgroundColor: "#383b42"}}>
-    <MainView>
-      <StyledText>Wpisz nazwę lub numer przystanku</StyledText>
-    </MainView>
     <AutocompleteDropdown
           ref={searchRef}
           controller={(controller) => {
@@ -73,13 +78,7 @@ export default function MZK() {
           onSelectItem={(item) => {
             let id = item && item.id
             if(!id) return
-            clearInterval(runTask)
-            setFetchingAPI(true)
-            getBusDepartures(id)
-            let run = setInterval(() => {
-              getBusDepartures(id)
-            }, 10000)
-            setRunTask(run)
+            onSelectItem(id)
           }}
           onClear={() => {
             clearInterval(runTask)
@@ -90,7 +89,7 @@ export default function MZK() {
           loading={loading}
           useFilter={false}
           textInputProps={{
-            placeholder: "Staszica",
+            placeholder: "Wpisz nazwę lub numer przystanku",
             autoCorrect: false,
             autoCapitalize: "none",
             style: {
@@ -115,7 +114,45 @@ export default function MZK() {
     
     <MainView style={{height: "100%"}}>
         {fetchingAPI ? <ActivityIndicator size="small" color="#0000ff" /> : null}
-        {departures ? <BusDepartures data={departures}/> : null}
+        {departures ? <BusDepartures data={departures}/> : 
+    <View>
+      <View style={styles.row}>
+        <StyledText style={styles.title}>
+          Staszica
+        </StyledText>
+        <Button
+          title="➤ Centrum przesiadkowe/ PKP"
+          onPress={() => onSelectItem(281)}/>
+        <View style={styles.separator}></View>
+        <Button
+          title="➤ Wyspiańskiego/ Sulechowska"
+          onPress={() => onSelectItem(280)}/>
+      </View>
+      <View style={styles.row}>
+        <StyledText style={styles.title}>
+        Centrum przesiadkowe
+        </StyledText>
+        <Button
+          title="➤ Centrum"
+          onPress={() => onSelectItem(400)}/>
+        <View style={styles.separator}></View>
+        <Button
+          title="➤ Staszica"
+          onPress={() => onSelectItem(279)}/>
+      </View>
+      <View style={styles.row}>
+        <StyledText style={styles.title}>
+        Dolina Zielona
+        </StyledText>
+        <Button
+          title="➤ Centrum"
+          onPress={() => onSelectItem(135)}/>
+        <View style={styles.separator}></View>
+        <Button
+          title="➤ Batorego/ Chynów"
+          onPress={() => onSelectItem(136)}/>
+      </View>
+    </View>}
     </MainView>
     </SafeAreaView>
   );
@@ -160,7 +197,17 @@ const styles = StyleSheet.create({
     borderLeftColor: '#65D085',
     borderLeftWidth: 2,
   },
-  text: {
-    color: 'white',
+  row: {
+    marginHorizontal: 16,
+    marginTop: 40,
+    zIndex: 0
+  },
+  title: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginVertical: 8,
+  },
+  separator: {
+    margin: 10
   },
 });

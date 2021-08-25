@@ -3,6 +3,7 @@ import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, View } from 'reac
 import DropDownPicker from 'react-native-dropdown-picker';
 import TimetableComponent from '../../components/TimetableComponent';
 import styled from "styled-components"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Timetable() {
   const [isLoading, setLoading] = useState(true);
@@ -48,6 +49,11 @@ export default function Timetable() {
       console.error(error);
     } finally {
       setLoading(false);
+      AsyncStorage.getItem('last_timetable').then(result => {
+        if(result){
+          setTimetableValue(result)
+        }
+      })
     }
   }
 
@@ -56,14 +62,17 @@ export default function Timetable() {
   `
 
   const getTimetable = (id) => {
-    setSelectedTimetable(timetableData.plany[id])
+    if(id){
+      setSelectedTimetable(timetableData.plany[id])
+      AsyncStorage.setItem('last_timetable', id)
+    }
   }
 
     return (
         <SafeAreaView style={styles.container}>
           <DropDownPicker
             theme="DARK"
-            style={{height: 60}}
+            style={{height: 60, borderRadius: 0, borderWidth: 0}}
             placeholder="Wybierz klasę/ nauczyciela/ sale"
             translation={{
               SEARCH_PLACEHOLDER: "Wyszukaj..."
@@ -83,8 +92,8 @@ export default function Timetable() {
           refreshControl={
             <RefreshControl
               refreshing={isLoading}
-              onRefresh={onRefresh}
-            />}>
+              onRefresh={onRefresh}/>
+            }>
               
             {selectedTimetable ? <TimetableComponent data={selectedTimetable} /> : null}
         </StyledView>
