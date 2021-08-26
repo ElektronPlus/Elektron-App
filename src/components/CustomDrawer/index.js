@@ -1,21 +1,15 @@
 import React from 'react';
 import {
-  SafeAreaView,
   View,
   StyleSheet,
-  Image,
-  Text,
   Linking,
 } from 'react-native';
 import Switch from 'expo-dark-mode-switch';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHome } from '@fortawesome/free-solid-svg-icons';
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import logo from '../../../assets/backpack.png';
 import styled from 'styled-components';
 import {useTheme} from '../../themes/ThemeManager.js';
 
@@ -31,15 +25,15 @@ const CustomDrawer = props => {
   const theme = useTheme();
   return (
     <StyledDrawer style={{flex: 1}}>
-      <Image source={logo} style={styles.sideMenuProfileIcon} />
-      <Text
+      <StyledText
         style={{
-          fontSize: 16,
+          fontSize: 30,
           textAlign: 'center',
-          color: 'grey',
+          fontWeight: "bold",
+          padding: 25,
         }}>
-        Elektron++ BETA
-      </Text>
+        Elektron++
+      </StyledText>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
         <View style={styles.separator} />
