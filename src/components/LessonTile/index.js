@@ -95,6 +95,7 @@ export default function LessonTile(props) {
         case "morning":
             return (
                 <TouchableOpacity style={styles.lessonStyle} onPress={props.onPress}>
+                  <Text style={styles.titleTextStyle}>Smacznej kawusi ☕</Text>
                 <View style={styles.iconContainerStyle}>
                     <FontAwesomeIcon 
                         icon={ faChalkboard } 
@@ -102,7 +103,7 @@ export default function LessonTile(props) {
                         color={'#fff'}/>
                 </View>
                 <View style={styles.contentStyle}>
-                  <Text style={styles.valueTextStyle}>Smacznej kawusi ☕</Text>
+                  <Text style={styles.valueTextStyle}>Pozostało {props.data.timeLeft} do 1 lekcji</Text>
                 </View>
                 {isShortLessons}
               </TouchableOpacity>
