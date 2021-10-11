@@ -38,6 +38,7 @@ export default function SchoolNews() {
             <RefreshControl
               refreshing={isLoading}
               onRefresh={onRefresh}
+              tintColor='#b8b8b8'
             />}>
 
             {schoolNewsData ? (<NewsTile data={schoolNewsData}/>) : (null) }

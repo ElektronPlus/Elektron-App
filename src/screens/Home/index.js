@@ -77,7 +77,7 @@ export default function Home() {
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
+          <RefreshControl refreshing={isLoading} onRefresh={onRefresh} tintColor='#b8b8b8'/>
         }>
         <RNBounceable style={styles.announcements}>
           <Text style={styles.titleTextStyle}>Ogłoszenie</Text>

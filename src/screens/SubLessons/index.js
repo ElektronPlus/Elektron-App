@@ -46,6 +46,7 @@ export default function SubLessons() {
             <RefreshControl
               refreshing={isLoading}
               onRefresh={onRefresh}
+              tintColor='#b8b8b8'
             />}>
             {subLessons ? <SubLessonTile day={subLessons.todaySubLessonsDay} content={subLessons.todaySubLessons}/> : null}
             {nextDaySubLessons ? <SubLessonTile day={subLessons.nextDaySubLessonsDay} content={subLessons.nextDaySubLessons}/> : null}

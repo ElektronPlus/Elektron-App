@@ -92,7 +92,8 @@ export default function Timetable() {
           refreshControl={
             <RefreshControl
               refreshing={isLoading}
-              onRefresh={onRefresh}/>
+              onRefresh={onRefresh}
+              tintColor='#b8b8b8'/>
             }>
               
             {selectedTimetable ? <TimetableComponent data={selectedTimetable} /> : null}
