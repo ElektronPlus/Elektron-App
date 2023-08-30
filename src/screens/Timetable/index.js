@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import { RefreshControl, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import TimetableComponent from '../../components/TimetableComponent';
-import styled from "styled-components"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Timetable() {
@@ -19,7 +18,7 @@ export default function Timetable() {
     getTimetableData();
   }, []);
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     getTimetableData();
   }, []);
 
@@ -31,9 +30,9 @@ export default function Timetable() {
       let grades = json.legend.oddział.options
       let teachers = json.legend.nauczyciel.options
       let classrooms = json.legend.sala.options
-      let gradesArray = [{label: '-------- Klasy --------', value: 'klasy', disabled: 'disabled'}]
-      let teachersArray = [{label: '-------- Nauczyciele --------', value: 'nauczyciele', disabled: 'disabled'}]
-      let classroomsArray = [{label: '-------- Sale --------', value: 'sale', disabled: 'disabled'}]
+      let gradesArray = [{label: '-------- Klasy --------', value: 'klasy', disabled: true }]
+      let teachersArray = [{label: '-------- Nauczyciele --------', value: 'nauczyciele', disabled: true }]
+      let classroomsArray = [{label: '-------- Sale --------', value: 'sale', disabled: true }]
       Object.keys(grades).map((index) => {
         gradesArray.push({label: grades[index].name, value: "o"+grades[index].value})
       })
@@ -44,7 +43,7 @@ export default function Timetable() {
         classroomsArray.push({label: classrooms[index].name, value: "s"+classrooms[index].value})
       })
       setTimetable(gradesArray.concat(teachersArray, classroomsArray))
-
+      setSelectedTimetable(json.plany["o1"])
     } catch (error) {
       console.error(error);
     } finally {
@@ -56,10 +55,6 @@ export default function Timetable() {
       })
     }
   }
-
-  const StyledView = styled.ScrollView`
-  backgroundColor: ${props => props.theme.background}
-  `
 
   const getTimetable = (id) => {
     if(id){
@@ -86,8 +81,9 @@ export default function Timetable() {
             setValue={setTimetableValue}
             onChangeValue={(value) => {
               getTimetable(value);
-            }}/>
-        <StyledView
+            }}
+            />
+        <ScrollView
           contentContainerStyle={styles.scrollView}
           refreshControl={
             <RefreshControl
@@ -97,7 +93,7 @@ export default function Timetable() {
             }>
               
             {selectedTimetable ? <TimetableComponent data={selectedTimetable} /> : null}
-        </StyledView>
+        </ScrollView>
       </SafeAreaView>
     )
 }

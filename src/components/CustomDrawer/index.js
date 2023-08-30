@@ -1,62 +1,59 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Linking,
-} from 'react-native';
-import Switch from 'expo-dark-mode-switch';
+import {View, StyleSheet, Linking, Text} from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import styled from 'styled-components';
-import {useTheme} from '../../themes/ThemeManager.js';
-
-const StyledDrawer = styled.SafeAreaView`
-  background: ${props => props.theme.backgroundAlt.toString()},
-  flex: 1
-`;
-const StyledText = styled.Text`
-  color: ${props => props.theme.text};
-`;
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faBus} from '@fortawesome/free-solid-svg-icons';
 
 const CustomDrawer = props => {
-  const theme = useTheme();
   return (
-    <StyledDrawer style={{flex: 1}}>
-      <StyledText
+    <SafeAreaView style={{flex: 1, backgroundColor: "#121212"}}>
+      <Text
         style={{
           fontSize: 30,
           textAlign: 'center',
-          fontWeight: "bold",
+          fontWeight: 'bold',
           padding: 25,
+          color: '#ffffff',
         }}>
         Elektron++
-      </StyledText>
+      </Text>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
-        <View style={styles.separator} />
         <DrawerItem
-          label={() => <StyledText>Discord</StyledText>}
+          label={() => <Text style={styles.white}>MZK Zielona Góra</Text>}
+          icon={({focused}) => (
+            <FontAwesomeIcon
+              icon={faBus}
+              size={focused ? 25 : 20}
+              color={focused ? '#0080ff' : '#999999'}
+            />
+          )}
+          onPress={() => Linking.openURL('https://mzkzg.wybran.dev/app')}
+        />
+
+        <View style={styles.separator} />
+        
+        <DrawerItem
+          label={() => <Text style={styles.white}>Discord</Text>}
           onPress={() => Linking.openURL('https://discord.gg/jrDxSTE')}
         />
         <DrawerItem
-          label={() => <StyledText>Strona szkoły</StyledText>}
+          label={() => <Text style={styles.white}>Strona szkoły</Text>}
           onPress={() => Linking.openURL('https://zseis.zgora.pl/')}
         />
         <DrawerItem
-          label={() => <StyledText>FB CKZiU</StyledText>}
-          onPress={() => Linking.openURL('https://www.facebook.com/zgelektronik/')}
+          label={() => <Text style={styles.white}>FB CKZiU</Text>}
+          onPress={() =>
+            Linking.openURL('https://www.facebook.com/zgelektronik/')
+          }
         />
       </DrawerContentScrollView>
-      <View style={{alignItems: 'center', padding: 10}}>
-        <Switch
-          value={theme.mode === 'dark'}
-          onChange={value => theme.setMode(value ? 'dark' : 'light')}
-        />
-      </View>
-    </StyledDrawer>
+    </SafeAreaView>
   );
 };
 
@@ -81,8 +78,11 @@ const styles = StyleSheet.create({
   separator: {
     marginVertical: 8,
     marginTop: 20,
-    borderBottomColor: "#737373",
-    borderBottomWidth: StyleSheet.hairlineWidth
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  white: {
+    color: '#ffffff',
   }
 });
 

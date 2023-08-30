@@ -5,25 +5,22 @@ import {
   Button,
   ScrollView,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
-import styled from "styled-components/native"
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import * as Progress from 'react-native-progress';
 import LessonTile from '../../components/LessonTile';
 import LessonHoursList from '../../components/LessonHoursList';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faNewspaper, faUmbrellaBeach, faLaughBeam } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+  faNewspaper,
+  faUmbrellaBeach,
+  faLaughBeam,
+} from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-native-modal';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function Home() {
-  const ModalView = styled.View`
-  backgroundColor: ${props => props.theme.backgroundAlt}
-  `
-  const ModalTitle = styled.Text`
-  background: ${props => props.theme.backgroundAlt},
-  color: ${props => props.theme.text}
-  `
   const [isLoading, setLoading] = useState(true);
   const [homeApi, setHomeApi] = useState();
   const [lessonHours, setLessonHours] = useState();
@@ -67,90 +64,84 @@ export default function Home() {
     }
   };
 
-  const Container = styled.SafeAreaView`
-  flex:1;
-  background:${props => props.theme.background};
-`
-
   return (
-    <Container>
+    <SafeAreaView style={{backgroundColor: '#121212'}}>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={onRefresh} tintColor='#b8b8b8'/>
+          <RefreshControl
+            refreshing={isLoading}
+            onRefresh={onRefresh}
+            tintColor="#b8b8b8"
+          />
         }>
         <RNBounceable style={styles.announcements}>
           <Text style={styles.titleTextStyle}>Ogłoszenie</Text>
           <View style={styles.iconContainerStyle}>
-          <FontAwesomeIcon 
-                icon={ faNewspaper } 
-                size={30}
-                color={'#fff'}/>
+            <FontAwesomeIcon icon={faNewspaper} size={30} color={'#fff'} />
           </View>
           <View style={styles.contentStyle}>
-            {homeApi ? <Text style={styles.valueTextStyle}>{homeApi.news[0].content}</Text> : null}
-            {homeApi ? <Text style={styles.newsFooterTextStyle}>{homeApi.news[0].time}</Text> : null}
+            {homeApi ? (
+              <Text style={styles.valueTextStyle}>
+                {homeApi.news[0].content}
+              </Text>
+            ) : null}
+            {homeApi ? (
+              <Text style={styles.newsFooterTextStyle}>
+                {homeApi.news[0].time}
+              </Text>
+            ) : null}
           </View>
         </RNBounceable>
 
-        <View style={{flexDirection: 'row'}}>
-          <RNBounceable style={styles.luckyNumberStyle}>
-            <Text style={styles.titleTextStyle}>Szczęśliwy numerek</Text>
-            <View style={styles.iconContainerStyle}>
-              <FontAwesomeIcon 
-                  icon={ faLaughBeam } 
-                  size={30}
-                  color={'#fff'}/>
-            </View>
-            <View style={styles.contentStyle}>
-              {homeApi ? <Text style={styles.numberInfoTextStyle}>{homeApi.luckyNumber.info}</Text> : null}
-            </View>
-            <View style={styles.footerContainerStyle}>
-              {homeApi ? <Text style={styles.footerTextStyle}>{homeApi.luckyNumber.number}</Text> : null}
-            </View>
-          </RNBounceable>
-          <RNBounceable style={styles.vacationStyle}>
-            <Text style={styles.titleTextStyle}>Wakacje</Text>
-            <View style={styles.iconContainerStyle}>
-            <FontAwesomeIcon 
-                icon={ faUmbrellaBeach } 
-                size={30}
-                color={'#fff'}/>
-            </View>
-            <View style={styles.contentStyle}>
-              {homeApi ? <Text style={styles.valueTextStyle}>Jeszcze tylko {homeApi.vacation.daysLeft} dni do wakacji</Text> : null}
-            </View>
-            <View style={styles.contentStyle}>
-              {homeApi ? (
+        <RNBounceable style={styles.vacationStyle}>
+          <Text style={styles.titleTextStyle}>Wakacje</Text>
+          <View style={styles.iconContainerStyle}>
+            <FontAwesomeIcon icon={faUmbrellaBeach} size={30} color={'#fff'} />
+          </View>
+          <View style={styles.contentStyle}>
+            {homeApi ? (
+              <Text style={styles.valueTextStyle}>
+                Jeszcze tylko {homeApi.vacation.daysLeft} dni do wakacji
+              </Text>
+            ) : null}
+          </View>
+          <View style={styles.contentStyle}>
+            {homeApi ? (
               <Progress.Bar
                 style={{marginTop: 10}}
                 progress={homeApi.vacation.procent}
                 width={120}
                 height={10}
-                color="white" />) : null}
-            </View>
-          </RNBounceable>
-        </View>
-          {homeApi ? <LessonTile data={homeApi.lesson} onPress={toggleModal}/> : null }
+                color="white"
+              />
+            ) : null}
+          </View>
+        </RNBounceable>
+
+        {homeApi ? (
+          <LessonTile data={homeApi.lesson} onPress={toggleModal} />
+        ) : null}
         <View style={styles.bottomSpace}></View>
       </ScrollView>
 
       <View>
-      <Modal isVisible={isModalVisible}
-        backdropOpacity={0}
-        onBackdropPress={toggleModal}
-        animationInTiming={600}
-        animationOutTiming={600}
-        backdropTransitionInTiming={600}
-        backdropTransitionOutTiming={600}>
-        <ModalView style={styles.modalContent}>
-          <ModalTitle style={styles.modalContentTitle}>Dzwonki 🔔</ModalTitle>
-          {lessonHours ? <LessonHoursList data={lessonHours} /> : null}
-          <Button onPress={toggleModal} title="zamknij" />
-        </ModalView>
-      </Modal>
-    </View>
-    </Container>
+        <Modal
+          isVisible={isModalVisible}
+          backdropOpacity={0}
+          onBackdropPress={toggleModal}
+          animationInTiming={600}
+          animationOutTiming={600}
+          backdropTransitionInTiming={600}
+          backdropTransitionOutTiming={600}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalContentTitle}>Dzwonki 🔔</Text>
+            {lessonHours ? <LessonHoursList data={lessonHours} /> : null}
+            <Button onPress={toggleModal} title="zamknij" />
+          </View>
+        </Modal>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -168,19 +159,11 @@ const styles = StyleSheet.create({
     width: '95%',
     backgroundColor: '#FF6863',
   },
-  luckyNumberStyle: {
-    padding: 24,
-    borderRadius: 20,
-    marginTop: 15,
-    width: '46%',
-    marginHorizontal: 5,
-    backgroundColor: '#5a65ff',
-  },
   vacationStyle: {
     padding: 24,
     borderRadius: 20,
     marginTop: 15,
-    width: '46%',
+    width: '95%',
     marginHorizontal: 5,
     backgroundColor: '#96da45',
   },
@@ -244,7 +227,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   bottomSpace: {
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   modalContent: {
     padding: 22,

@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import styled from "styled-components"
 
 export default function TimetableComponent(props) {
     let hours = props.data.godziny
@@ -10,92 +9,83 @@ export default function TimetableComponent(props) {
     let thursday = props.data.tydzien[3].lekcje
     let friday = props.data.tydzien[4].lekcje
 
-    const LessonItem = styled.View`
-    borderBottomColor: ${props => props.theme.text}
-    `
-
-    const StyledText = styled.Text`
-    color: ${props => props.theme.text};
-    font-size: 15
-    `
-
     const mondayLessons = monday.map((lesson, i) => {
       return (
-        <LessonItem style={(i !== monday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
+        <View style={(i !== monday.length - 1) ? styles.View : styles.ViewLast} key={lesson.index}>
           <View style={styles.number}>
-            <StyledText>{lesson.index}.</StyledText>
+            <Text style={styles.text}>{lesson.index}.</Text>
           </View>
           <View style={styles.time}>
-            <StyledText>{hours[i]}</StyledText>
+            <Text style={styles.text}>{hours[i]}</Text>
           </View>
           <View style={styles.lesson}>
-            <StyledText>{lesson.data}</StyledText>
+            <Text style={styles.text}>{lesson.data}</Text>
           </View>
-        </LessonItem>
+        </View>
       );
     })
 
     const tuesdayLessons = tuesday.map((lesson, i) => {
       return (
-        <LessonItem style={(i !== tuesday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
+        <View style={(i !== tuesday.length - 1) ? styles.View : styles.ViewLast} key={lesson.index}>
           <View style={styles.number}>
-            <StyledText>{lesson.index}.</StyledText>
+            <Text style={styles.text}>{lesson.index}.</Text>
           </View>
           <View style={styles.time}>
-            <StyledText>{hours[i]}</StyledText>
+            <Text style={styles.text}>{hours[i]}</Text>
           </View>
           <View style={styles.lesson}>
-            <StyledText>{lesson.data}</StyledText>
+            <Text style={styles.text}>{lesson.data}</Text>
           </View>
-        </LessonItem>
+        </View>
       );
     })
 
     const wednesdayLessons = wednesday.map((lesson, i) => {
       return (
-        <LessonItem style={(i !== wednesday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
+        <View style={(i !== wednesday.length - 1) ? styles.View : styles.ViewLast} key={lesson.index}>
           <View style={styles.number}>
-            <StyledText>{lesson.index}.</StyledText>
+            <Text style={styles.text}>{lesson.index}.</Text>
           </View>
           <View style={styles.time}>
-            <StyledText>{hours[i]}</StyledText>
+            <Text style={styles.text}>{hours[i]}</Text>
           </View>
           <View style={styles.lesson}>
-            <StyledText>{lesson.data}</StyledText>
+            <Text style={styles.text}>{lesson.data}</Text>
           </View>
-        </LessonItem>
+        </View>
       );
     })
 
     const thursdayLessons = thursday.map((lesson, i) => {
       return (
-        <LessonItem style={(i !== thursday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
+        <View style={(i !== thursday.length - 1) ? styles.View : styles.ViewLast} key={lesson.index}>
           <View style={styles.number}>
-            <StyledText>{lesson.index}.</StyledText>
+            <Text style={styles.text}>{lesson.index}.</Text>
           </View>
           <View style={styles.time}>
-            <StyledText>{hours[i]}</StyledText>
+            <Text style={styles.text}>{hours[i]}</Text>
           </View>
           <View style={styles.lesson}>
-            <StyledText>{lesson.data}</StyledText>
+            <Text style={styles.text}>{lesson.data}</Text>
           </View>
-        </LessonItem>
+        </View>
       );
     })
 
     const fridayLessons = friday.map((lesson, i) => {
       return (
-        <LessonItem style={(i !== friday.length - 1) ? styles.lessonItem : styles.lessonItemLast} key={lesson.index}>
+        <View style={(i !== friday.length - 1) ? styles.View : styles.ViewLast} key={lesson.index}>
           <View style={styles.number}>
-            <StyledText>{lesson.index}.</StyledText>
+            <Text style={styles.text}>{lesson.index}.</Text>
           </View>
           <View style={styles.time}>
-            <StyledText>{hours[i]}</StyledText>
+            <Text style={styles.text}>{hours[i]}</Text>
           </View>
           <View style={styles.lesson}>
-            <StyledText>{lesson.data}</StyledText>
+            <Text style={styles.text}>{lesson.data}</Text>
           </View>
-        </LessonItem>
+        </View>
       );
     })
 
@@ -135,14 +125,14 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#3960CF',
   },
-  lessonItem: {
+  View: {
     padding: 4,
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
     borderBottomWidth: 1
   },
-  lessonItemLast:{
+  ViewLast:{
     padding: 4,
     display: 'flex',
     flexWrap: 'wrap',

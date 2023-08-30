@@ -1,12 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import { RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import styled from "styled-components";
+import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import SubLessonTile from '../../components/SubLessonTile';
 
 export default function SubLessons() {
-  const NewsScrollView = styled.ScrollView`
-  background: ${props => props.theme.background}
-`
   const [isLoading, setLoading] = useState(true);
   const [subLessons, setSubLessons] = useState(null);
   const [nextDaySubLessons, setNextDaySubLessons] = useState(null);
@@ -34,13 +30,9 @@ export default function SubLessons() {
     }
   };
 
-  const StyledText = styled.Text`
-    color: ${props => props.theme.text}
-    `
-
     return (
         <SafeAreaView style={styles.container}>
-        <NewsScrollView
+        <ScrollView
           contentContainerStyle={styles.scrollView}
           refreshControl={
             <RefreshControl
@@ -51,7 +43,7 @@ export default function SubLessons() {
             {subLessons ? <SubLessonTile day={subLessons.todaySubLessonsDay} content={subLessons.todaySubLessons}/> : null}
             {nextDaySubLessons ? <SubLessonTile day={subLessons.nextDaySubLessonsDay} content={subLessons.nextDaySubLessons}/> : null}
             <View style={styles.bottomSpace}></View>
-        </NewsScrollView>
+        </ScrollView>
       </SafeAreaView>
     )
 }

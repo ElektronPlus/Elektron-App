@@ -1,4 +1,7 @@
 {
   "name": "ElektronPlus",
-  "displayName": "ElektronPlus"
+  "displayName": "ElektronPlus",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-8487255892576881~6132868827"
+  }
 }

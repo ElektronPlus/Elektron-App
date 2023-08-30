@@ -1,12 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import { RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, SafeAreaView, StyleSheet, ScrollView, View } from 'react-native';
 import NewsTile from '../../components/NewsTile';
-import styled from "styled-components";
 
 export default function SchoolNews() {
-  const NewsScrollView = styled.ScrollView`
-  background: ${props => props.theme.background}
-`
   const [isLoading, setLoading] = useState(true);
   const [schoolNewsData, setSchoolNewsData] = useState([]);
 
@@ -32,7 +28,7 @@ export default function SchoolNews() {
 
     return (
         <SafeAreaView style={styles.container}>
-        <NewsScrollView
+        <ScrollView
           contentContainerStyle={styles.scrollView}
           refreshControl={
             <RefreshControl
@@ -44,7 +40,7 @@ export default function SchoolNews() {
             {schoolNewsData ? (<NewsTile data={schoolNewsData}/>) : (null) }
             
             <View style={styles.bottomSpace}></View>
-        </NewsScrollView>
+        </ScrollView>
       </SafeAreaView>
     )
 }
