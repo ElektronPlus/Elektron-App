@@ -70,12 +70,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
     ndkVersion rootProject.ext.ndkVersion
-
     compileSdkVersion rootProject.ext.compileSdkVersion
-
-    namespace "com.elektronplus"
     defaultConfig {
-        applicationId "com.elektronplus"
+        applicationId "pl.krystian_wybranowski.elektronPlus"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -121,3 +118,4 @@ dependencies {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.google.gms.google-services'

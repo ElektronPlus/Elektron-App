@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface ElektronPlusTests : XCTestCase
+@interface elektronplusTests : XCTestCase
 
 @end
 
-@implementation ElektronPlusTests
+@implementation elektronplusTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

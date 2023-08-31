@@ -1,13 +1,14 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import MyDrawer from './src/components/Drawer';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import mobileAds from 'react-native-google-mobile-ads';
-import { BannerAd } from 'react-native-google-mobile-ads';
+import {BannerAd} from 'react-native-google-mobile-ads';
+import {PermissionsAndroid} from 'react-native';
 
 export default function App() {
-  
-  mobileAds().initialize()
+  PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+  mobileAds().initialize();
 
   const DefaultTheme = {
     dark: true,
@@ -15,15 +16,23 @@ export default function App() {
       primary: '#3960CF',
       text: '#ffffff',
       background: '#121212',
-    }
+    },
   };
 
   return (
-      <NavigationContainer theme={DefaultTheme}>
+    <NavigationContainer theme={DefaultTheme}>
       <MyDrawer />
-      <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#121212' }}>
-        <BannerAd unitId='ca-app-pub-8487255892576881/1387808600' size='ANCHORED_ADAPTIVE_BANNER' />
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#121212',
+        }}>
+        <BannerAd
+          unitId="ca-app-pub-8487255892576881/1387808600"
+          size="ANCHORED_ADAPTIVE_BANNER"
+        />
       </View>
-      </NavigationContainer>
+    </NavigationContainer>
   );
 }

@@ -1,4 +1,4 @@
-package com.elektronplus;
+package pl.krystian_wybranowski.elektronplus;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

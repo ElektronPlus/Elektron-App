@@ -1,4 +1,4 @@
-package com.elektronplus;
+package pl.krystian_wybranowski.elektronplus;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
