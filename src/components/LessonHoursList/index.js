@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     text: {
+        color: '#fff',
         fontSize: 20,
     }
 })

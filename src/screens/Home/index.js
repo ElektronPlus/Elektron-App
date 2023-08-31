@@ -94,6 +94,10 @@ export default function Home() {
           </View>
         </RNBounceable>
 
+        {homeApi ? (
+          <LessonTile data={homeApi.lesson} onPress={toggleModal} />
+        ) : null}
+        
         <RNBounceable style={styles.vacationStyle}>
           <Text style={styles.titleTextStyle}>Wakacje</Text>
           <View style={styles.iconContainerStyle}>
@@ -119,9 +123,6 @@ export default function Home() {
           </View>
         </RNBounceable>
 
-        {homeApi ? (
-          <LessonTile data={homeApi.lesson} onPress={toggleModal} />
-        ) : null}
         <View style={styles.bottomSpace}></View>
       </ScrollView>
 
@@ -231,12 +232,14 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     padding: 22,
+    backgroundColor: '#121212',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   modalContentTitle: {
+    color: '#fff',
     fontSize: 20,
     marginBottom: 12,
   },
